@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.example</groupId>
+  <artifactId>Selenium</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>Archetype - Selenium</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <!-- Project Encoding & Java Version Matching Your JDK -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+
+    <!-- Dependency Versions -->
+    <selenium.version>4.27.0</selenium.version>
+    <testng.version>7.10.2</testng.version>
+    <extentreports.version>5.1.2</extentreports.version>
+    <maven.compiler.version>3.13.0</maven.compiler.version>
+    <maven.surefire.version>3.5.2</maven.surefire.version>
+  </properties>
+
+  <dependencies>
+  <!-- Selenium Java Client -->
+  <dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>4.27.0</version>
+  </dependency>
+
+  <!-- Security Override: Fixed Unbounded Memory Allocation -->
+  <dependency>
+    <groupId>io.opentelemetry</groupId>
+    <artifactId>opentelemetry-api</artifactId>
+    <version>1.62.0</version>
+  </dependency>
+
+  <!-- TestNG Test Runner -->
+  <dependency>
+    <groupId>org.testng</groupId>
+    <artifactId>testng</artifactId>
+    <version>${testng.version}</version>
+    <scope>test</scope>
+  </dependency>
+
+  <!-- ExtentReports for Rich HTML Reporting -->
+  <dependency>
+    <groupId>com.aventstack</groupId>
+    <artifactId>extentreports</artifactId>
+    <version>${extentreports.version}</version>
+  </dependency>
+
+  <!-- Security Override: Fixed Path Traversal Vulnerability -->
+  <dependency>
+    <groupId>org.freemarker</groupId>
+    <artifactId>freemarker</artifactId>
+    <version>2.3.35</version>
+  </dependency>
+</dependencies>
+
+
+  <build>
+    <plugins>
+      <!-- Modern Compiler Plugin compatible with modern JDKs -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version> <!-- Version 3.14.0+ handles JDK 24 symbols -->
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+        </configuration>
+      </plugin>
+
+
+      <!-- Modern Surefire Plugin to execute testng.xml -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <!-- This tells Java 24 to allow standard framework reflection -->
+          <argLine>--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED</argLine>
+          <suiteXmlFiles>
+            <suiteXmlFile>testng.xml</suiteXmlFile>
+          </suiteXmlFiles>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
+
+</project>
