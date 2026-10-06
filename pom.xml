@@ -19,6 +19,7 @@
     <extentreports.version>5.1.2</extentreports.version>
     <maven.compiler.version>3.13.0</maven.compiler.version>
     <maven.surefire.version>3.5.2</maven.surefire.version>
+    <cucumber.version>7.20.1</cucumber.version>
   </properties>
 
   <dependencies>
@@ -57,8 +58,23 @@
     <artifactId>freemarker</artifactId>
     <version>2.3.35</version>
   </dependency>
-</dependencies>
 
+    <!-- Cucumber core: Gherkin parsing + @Given/@When/@Then annotations -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Bridge that lets TestNG run Cucumber scenarios -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-testng</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+</dependencies>
 
   <build>
     <plugins>
@@ -72,8 +88,6 @@
           <target>17</target>
         </configuration>
       </plugin>
-
-
       <!-- Modern Surefire Plugin to execute testng.xml -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -87,9 +101,6 @@
           </suiteXmlFiles>
         </configuration>
       </plugin>
-
     </plugins>
   </build>
-
-
 </project>
