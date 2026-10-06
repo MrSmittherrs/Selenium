@@ -22,7 +22,7 @@ public class LoginSteps {
     @Then("I should be logged in")
     public void iShouldBeLoggedIn() {
         String currentUrl = Hooks.getDriver().getCurrentUrl();
-        Assert.assertTrue(currentUrl.contains("dashboard"),
-                "Expected to land on dashboard but was: " + currentUrl);
+        Assert.assertTrue(currentUrl.contains("inventory"),
+                "Expected to land on inventory page but was: " + currentUrl);
     }
 }
