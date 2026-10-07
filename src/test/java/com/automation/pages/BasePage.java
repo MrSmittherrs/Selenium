@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 // Shared helpers for every page object. Each helper waits for the element first,
 // so page objects never need Thread.sleep or raw findElement calls.
+//
 public abstract class BasePage {
     protected final WebDriver driver;
 
