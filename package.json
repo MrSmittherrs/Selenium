@@ -3,8 +3,10 @@
   "private": true,
   "scripts": {
     "test": "mvn clean test",
+    "report:clean": "node strip-params.mjs",
     "report": "allure generate target/allure-results",
-    "test:report": "run-s --continue-on-error test report"
+    "report:open": "allure open target/allure-report/awesome",
+    "test:report": "run-s --continue-on-error test report:clean report"
   },
   "devDependencies": {
     "allure": "^3.0.0",
