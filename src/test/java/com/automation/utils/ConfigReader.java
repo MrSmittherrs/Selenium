@@ -2,6 +2,7 @@ package com.automation.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigReader {
@@ -9,15 +10,14 @@ public class ConfigReader {
 
     // Runs once, the first time ConfigReader is used
     static {
-        try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
-            prop.load(fis);
+        try (InputStream in = ConfigReader.class.getClassLoader().getResourceAsStream("config.properties")) {
+            if (in == null) throw new RuntimeException("config.properties not found on classpath");
+            prop.load(in);
         } catch (IOException e) {
             throw new RuntimeException("Could not load config.properties", e);
         }
     }
 
-    // An environment variable wins over the file, e.g. PASSWORD overrides password,
-    // IMPLICIT_WAIT overrides implicit.wait
     public static String get(String key) {
         String envValue = System.getenv(key.toUpperCase().replace('.', '_'));
         return envValue != null ? envValue : prop.getProperty(key);

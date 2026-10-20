@@ -9,18 +9,25 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 public class DriverFactory {
 
     public static WebDriver create(String browser, boolean headless) {
+
         if (browser.equalsIgnoreCase("firefox")) {
             FirefoxOptions options = new FirefoxOptions();
+
             if (headless) {
                 options.addArguments("-headless");
             }
             return new FirefoxDriver(options);
+
         }
 
         ChromeOptions options = new ChromeOptions();
+
         if (headless) {
-            options.addArguments("--headless=new");
+            options.addArguments("--headless=new", "--window-size=1920,1080");
         }
+
+        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
         return new ChromeDriver(options);
+
     }
 }
