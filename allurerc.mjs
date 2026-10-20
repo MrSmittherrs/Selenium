@@ -10,7 +10,7 @@ export default defineConfig({
                 reportName: "Sauce Demo Automation",
                 reportLanguage: "en",
                 singleFile: true,                       // true = one shareable HTML file
-                logo: "",                               // optional branding
+                logo: "/assets/logo.png",                               // optional branding
                 theme: "dark",
                 groupBy: ["feature", "story"]   // tree grouping in the sidebar
             },
