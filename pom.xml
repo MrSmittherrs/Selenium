@@ -17,11 +17,15 @@
     <opentelemetry.version>1.62.0</opentelemetry.version>
     <testng.version>7.10.2</testng.version>
     <cucumber.version>7.20.1</cucumber.version>
-    <allure.version>3.0.0</allure.version>
+    <!-- Allure Java adapter version (separate from the Allure Report 3 CLI).
+         If 2.29.0 doesn't resolve, check Maven Central for the latest io.qameta.allure:allure-cucumber7-jvm -->
+    <allure.java.version>2.29.0</allure.java.version>
+    <aspectj.version>1.9.22</aspectj.version>
 
     <!-- Plugin versions -->
     <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
     <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
+    <maven.dependency.plugin.version>3.6.1</maven.dependency.plugin.version>
   </properties>
 
   <dependencies>
@@ -62,10 +66,19 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- Allure adapter for Cucumber 7 (also brings the @Step/@Attachment annotations) -->
     <dependency>
       <groupId>io.qameta.allure</groupId>
       <artifactId>allure-cucumber7-jvm</artifactId>
-      <version>${allure.version}</version>
+      <version>${allure.java.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- AspectJ weaver: makes @Step on your page-object methods show up in the report -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>${aspectj.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -78,13 +91,35 @@
         <version>${maven.compiler.plugin.version}</version>
       </plugin>
 
+      <!-- Exposes the resolved weaver jar path as ${org.aspectj:aspectjweaver:jar} -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>${maven.dependency.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>resolve-aspectj-path</id>
+            <goals>
+              <goal>properties</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven.surefire.plugin.version}</version>
         <configuration>
-          <!-- Allows framework reflection on newer JDKs -->
-          <argLine>--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED</argLine>
+          <!-- add-opens for newer JDKs + AspectJ agent so @Step works -->
+          <argLine>
+            --add-opens java.base/java.lang=ALL-UNNAMED
+            --add-opens java.base/java.util=ALL-UNNAMED
+            -javaagent:"${org.aspectj:aspectjweaver:jar}"
+          </argLine>
+          <systemPropertyVariables>
+            <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+          </systemPropertyVariables>
           <suiteXmlFiles>
             <suiteXmlFile>testng.xml</suiteXmlFile>
           </suiteXmlFiles>
