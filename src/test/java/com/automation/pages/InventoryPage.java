@@ -8,10 +8,10 @@ import org.openqa.selenium.WebElement;
 public class InventoryPage extends BasePage {
 
     // Locators
-    private By inventoryItem = By.cssSelector("[data-test='inventory-item']");
-    private By itemName = By.cssSelector("[data-test='inventory-item-name']");
-    private By itemButton = By.tagName("button");
-    private By cartLink = By.cssSelector("[data-test='shopping-cart-link']");
+    private final By inventoryItem = By.cssSelector("[data-test='inventory-item']");
+    private final By itemName = By.cssSelector("[data-test='inventory-item-name']");
+    private final By itemButton = By.tagName("button");
+    private final By cartLink = By.cssSelector("[data-test='shopping-cart-link']");
 
     public InventoryPage(WebDriver driver) {
         super(driver);

@@ -6,10 +6,10 @@ import org.openqa.selenium.WebDriver;
 public class LoginPage extends BasePage {
 
     // Locators
-    private By usernameField = By.cssSelector("[data-test='username']");
-    private By passwordField = By.cssSelector("[data-test='password']");
-    private By loginButton = By.cssSelector("[data-test='login-button']");
-    private By errorMessage = By.cssSelector("[data-test='error']");
+    private final By usernameField = By.cssSelector("[data-test='username']");
+    private final By passwordField = By.cssSelector("[data-test='password']");
+    private final By loginButton = By.cssSelector("[data-test='login-button']");
+    private final By errorMessage = By.cssSelector("[data-test='error']");
 
     public LoginPage(WebDriver driver) {
         super(driver);

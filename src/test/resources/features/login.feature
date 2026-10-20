@@ -17,8 +17,8 @@ Feature: Login
     Then I should see the error "<error>"
 
     Examples:
-      | user            | password      | error                                                                     |
-      | locked_out_user | secret_sauce  | Epic sadface: Sorry, this user has been locked out.                       |
-      | standard_user   | wrong_pass    | Epic sadface: Username and password do not match any user in this service |
-      |                 | secret_sauce  | Epic sadface: Username is required                                        |
-      | standard_user   |               | Epic sadface: Password is required                                        |
+      | user            | password     | error                                                                     |
+      | locked_out_user | secret_sauce | Epic sadface: Sorry, this user has been locked out.                       |
+      | standard_user   | wrong_pass   | Epic sadface: Username and password do not match any user in this service |
+      |                 | secret_sauce | Epic sadface: Username is required                                        |
+      | standard_user   |              | Epic sadface: Password is required                                        |
